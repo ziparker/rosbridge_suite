@@ -33,8 +33,6 @@
 import rospy
 import uuid
 
-from rosauth.srv import Authentication
-
 import sys
 import threading
 import traceback
@@ -125,6 +123,8 @@ class RosbridgeWebSocket(WebSocketHandler):
                     msg = json.loads(message)
 
                 if msg['op'] == 'auth':
+                    from rosauth.srv import Authentication
+
                     # check the authorization information
                     auth_srv = rospy.ServiceProxy('authenticate', Authentication)
                     resp = auth_srv(msg['mac'], msg['client'], msg['dest'],

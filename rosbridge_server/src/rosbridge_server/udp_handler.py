@@ -1,5 +1,4 @@
 import rospy
-from rosauth.srv import Authentication
 from rosbridge_library.rosbridge_protocol import RosbridgeProtocol
 from rosbridge_library.util import json, bson
 
@@ -66,6 +65,8 @@ class RosbridgeUdpSocket:
             try:
                 msg = json.loads(message)
                 if msg['op'] == 'auth':
+                    from rosauth.srv import Authentication
+
                     # check the authorization information
                     auth_srv = rospy.ServiceProxy('authenticate', Authentication)
                     resp = auth_srv(msg['mac'], msg['client'], msg['dest'],
